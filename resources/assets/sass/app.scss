@@ -7,7 +7,25 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "bootstrap_theme";
 
-body{
-	color: purple !important;
+.display-none{
+	display: none;
+}
+
+.tag{
+	margin: .2em;
+	min-width: 7em;
+}
+
+.tag-btn{
+	@extend .btn;
+	@extend .btn-sm;
+	@extend .btn-success;
+}
+
+.tag-input{
+  display: flex;
+  padding: 1.2em 0em;
+  align-items: center; 
 }

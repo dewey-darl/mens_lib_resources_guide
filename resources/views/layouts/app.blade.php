@@ -12,7 +12,6 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet" type="text/css" />
-    <link href="/css/bootstra_theme.css" rel="stylesheet" type="text/css" />
 
     <!-- Scripts -->
     <script>
@@ -20,6 +19,7 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <script src="/js/app.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -53,9 +53,20 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
+                        <li>
+                            {!! link_to_action('ResourceController@index', 'Resources') !!}
+                        </li>
+                        <li>
+                            {!! link_to_action('ResourceController@create', 'Add Resource') !!}
+                        </li>
+                        @if (Auth::user()->isAdmin())
+                            <li>
+                                {!! link_to_action('UserController@index', 'Users') !!}
+                            </li>
+                        @endif
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->username }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -84,6 +95,4 @@
             @yield('content')
         </div>
     </div>
-    <!-- Scripts -->
-    <script src="/js/app.js"></script>
 </body>

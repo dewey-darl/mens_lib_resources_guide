@@ -33,7 +33,7 @@ class ResourceController extends Controller
                 [
                     'resource' => new Resource,
                     'tag' => new Tag,
-                    'tags' => Tag::all()
+                    'tags' => Tag::orderBy('name')->get()
                 ]
         );
     }
@@ -46,18 +46,25 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
+        //Make sure the user is logged in
         $this->authorize('create', Resource::class);
+        //Validate request
         $this->validate($request, [
             'name' => 'required|max:255|unique:resources',
             'url' => 'required|max:255|unique:resources',
             'description' => 'required|max:10000'
         ]);
-        Auth::user()->resources()->create([
+        //Create the resource
+        $resource = Auth::user()->resources()->create([
             'name' => $request->name,
             'url' => $request->url,
             'description' => $request->description
         ]);
+        //Add the tags for this resource to the pivot table
+        $resource->tags()->attach($request->tags);
+        //Put a success message in the flasher
         $request->session()->flash('success', 'Resource created!');
+        //Take them back to the resource form so they can add more resources
         return redirect('/resources/create');
     }
 

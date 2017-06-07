@@ -34,4 +34,8 @@ class User extends Authenticatable
     function tags(){
         return $this->hasMany(Tag::class);
     }
+
+    function isAdmin(){
+        return $this->role === 'admin';
+    }
 }

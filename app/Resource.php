@@ -11,4 +11,8 @@ class Resource extends Model
     function user(){
     	return $this->belongsTo(User::class);
     }
+
+    function tags(){
+    	return $this->belongsToMany(Tag::class);
+    }
 }
