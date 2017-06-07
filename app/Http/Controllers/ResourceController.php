@@ -6,6 +6,7 @@ use App\Resource;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ResourceController extends Controller
 {
@@ -112,4 +113,57 @@ class ResourceController extends Controller
     {
         //
     }
+
+    /**
+     * Returns and displays resources that have at least one of the specified tags.
+     *
+     * @param  String  $tagString  A string of tag names, separated by a +
+     * @return \Illuminate\Http\Response
+     */
+    public function hasAny(String $tagString)
+    {
+        $tagNames = explode('+', $tagString);
+        $resourcesInfo = DB::table('tags')
+                        ->select('resources.id')
+                        ->join('resource_tag', 'tags.id', '=', 'resource_tag.tag_id')
+                        ->whereIn('tags.name', $tagNames)
+                        ->join('resources', 'resource_tag.resource_id', '=', 'resources.id')
+                        ->groupBy('resources.id')
+                        ->inRandomOrder()
+                        ->get();
+        $resourceIds = array_column($resourcesInfo->all(), 'id');
+        $resources = Resource::find($resourceIds);
+        return view('resources.index', ['resources' => $resources]);
+    }
+
+    /**
+     * Returns and displays resources that have all of the specified tags.
+     *
+     * @param  String  $tagString  A string of tag names, separated by a +
+     * @return \Illuminate\Http\Response
+     */
+    public function hasAll(String $tagString)
+    {
+        $tagNames = explode('+', $tagString);
+        $count = count($tagNames);
+        $resourcesInfo = DB::table('tags')
+                        ->select('resources.id', DB::raw('COUNT(*) AS count'))
+                        ->join('resource_tag', 'tags.id', '=', 'resource_tag.tag_id')
+                        ->whereIn('tags.name', $tagNames)
+                        ->join('resources', 'resource_tag.resource_id', '=', 'resources.id')
+                        ->groupBy('resources.id')
+                        ->havingRaw("count >= $count")
+                        ->inRandomOrder()
+                        ->get();
+        $resourceIds = array_column($resourcesInfo->all(), 'id');
+        $resources = Resource::find($resourceIds);
+        return view('resources.index', ['resources' => $resources]);
+    }
+
 }
+
+
+
+
+
+

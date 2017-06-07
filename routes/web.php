@@ -22,5 +22,7 @@ Auth::routes();
 Route::resource('users', 'UserController');
 
 Route::resource('resources', 'ResourceController');
+Route::get('resources/has-all/{query}', 'ResourceController@hasAll');
+Route::get('resources/has-any/{query}', 'ResourceController@hasAny');
 
 Route::resource('tags', 'TagController');

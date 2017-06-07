@@ -38,7 +38,7 @@ class TagController extends Controller
     {
         $this->authorize('create', Tag::class);
         $this->validate($request, [
-            'name' => 'required|max:255|unique:tags'
+            'name' => 'required|max:255|unique:tags|regex:/^[A-Za-z \d]+$/'
         ]);
         Auth::user()->tags()->create([
             'name' => str_replace(' ', '_', $request->name)
