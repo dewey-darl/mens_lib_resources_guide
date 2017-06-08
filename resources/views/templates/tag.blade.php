@@ -1,0 +1,1 @@
+@include('templates.tag_button', ['tag' => $tag])

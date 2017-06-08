@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('users.index', ['users' => User::all()]);
     }
 
     /**
@@ -80,6 +80,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect('users')->with('info', 'User deleted.');
     }
 }

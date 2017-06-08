@@ -27,9 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    
     function resources(){
         return $this->hasMany(Resource::class);
     }
+
 
     function tags(){
         return $this->hasMany(Tag::class);

@@ -33,7 +33,7 @@
 	</div>
 	<div class="tag-cloud">
 		@foreach($tags as $tag)
-			<span class="tag tag-btn" data-id="{{ $tag->id }}">{{ $tag->readableName() }}</span>
+			@include('templates.tag_button', ['tag' => $tag])
 		@endforeach
 	</div>
 	<script>

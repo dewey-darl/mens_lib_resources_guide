@@ -19,7 +19,7 @@ class ResourceTagPolicy
      */
     public function view(User $user, Resource $resource)
     {
-        //
+        return true;
     }
 
     /**
@@ -42,7 +42,7 @@ class ResourceTagPolicy
      */
     public function update(User $user, Resource $resource)
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
@@ -54,6 +54,10 @@ class ResourceTagPolicy
      */
     public function delete(User $user, Resource $resource)
     {
-        //
+        return $user->isAdmin();
+    }
+
+    public function publish(User $user, Resource $resource){
+        return $user->isAdmin();
     }
 }

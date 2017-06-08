@@ -17,11 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('users', 'UserController');
+Route::group(['middleware' => ['web', 'admin_auth']], function(){
+	Route::resource('users', 'UserController');
+});
 
 Route::resource('resources', 'ResourceController');
+
 Route::get('resources/has-all/{query}', 'ResourceController@hasAll');
 Route::get('resources/has-any/{query}', 'ResourceController@hasAny');
 
