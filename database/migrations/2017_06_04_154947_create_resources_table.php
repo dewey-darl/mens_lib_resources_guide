@@ -15,15 +15,16 @@ class CreateResourcesTable extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->string('name')->unique();
             $table->string('url')->unique();
             $table->text('description');
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
         });
 
        Schema::table('resources', function($table) {
-           $table->foreign('user_id')->references('id')->on('users');
+           $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
        });
     }
 

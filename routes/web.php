@@ -26,15 +26,19 @@ Route::group(['middleware' => ['web', 'admin_auth_group']], function(){
 
 	Route::get('resources/unpublished', 'ResourceController@getUnpublished');
 	Route::put('resources/{resource}/publish', 'ResourceController@publish');
+	Route::patch('resources/{resource}/publish', 'ResourceController@publish');
+	Route::put('resources/{resource}/unpublish', 'ResourceController@unpublish');
+	Route::patch('resources/{resource}/unpublish', 'ResourceController@unpublish');
 	Route::get('resources/{resource}/edit', 'ResourceController@edit');
 	Route::put('resources/{resource}', 'ResourceController@update');
 	Route::patch('resources/{resource}', 'ResourceController@update');
 	Route::delete('resources/{resource}', 'ResourceController@destroy');
 
-	Route::get('tag/{tag}/edit', 'TagController@edit');
-	Route::put('tag/{tag}', 'TagController@update');
-	Route::patch('tag/{tag}', 'TagController@update');
-	Route::delete('tag/{tag}', 'TagController@destroy');
+	Route::get('tags', 'TagController@index');
+	//Route::get('tag/{tag}/edit', 'TagController@edit');
+	Route::put('tags/{tag}', 'TagController@update');
+	Route::patch('tags/{tag}', 'TagController@update');
+	Route::delete('tags/{tag}', 'TagController@destroy');
 });
 
 
@@ -52,9 +56,23 @@ Route::group(['middleware' => ['auth']], function(){
 });
 
 Route::get('resources', 'ResourceController@index');
-Route::get('resources/{resource}', 'ResourceController@show');
+//Route::get('resources/{resource}', 'ResourceController@show')->where('resource', '[0-9]+');;
 
-Route::get('resources/has-all/{query}', 'ResourceController@hasAll');
-Route::get('resources/has-any/{query}', 'ResourceController@hasAny');
+Route::get('resources/has-all/{query?}', 'ResourceController@hasAll');
+Route::get('resources/has-any/{query?}', 'ResourceController@hasAny');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

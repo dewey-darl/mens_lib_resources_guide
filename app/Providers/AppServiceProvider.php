@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //Custom validator for tags when submitting a post
+        /*
+        Blade::directive('glyphicon', function ($type) {
+            return "view('templates.glyphicon', ['type' => $type])->render();";
+        });
+        */
     }
 
     /**

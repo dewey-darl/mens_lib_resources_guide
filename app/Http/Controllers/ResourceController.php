@@ -17,10 +17,10 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        $resources = Resource::all();
+        $resources = Resource::published()->get();
         return view('resources.index', [
                                             'resources' => $resources, 
-                                            'selected_tags' => []
+                                            'selected_tags' => collect([])
                                         ]
         );
     }
@@ -47,20 +47,22 @@ class ResourceController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255|unique:resources',
             'url' => 'required|max:255|unique:resources',
-            'description' => 'required|max:10000'
+            'description' => 'required|max:10000',
+            'tags.*' => 'exists:tags,id'
         ]);
         //Create the resource
         $resource = Auth::user()->resources()->create([
             'name' => $request->name,
             'url' => $request->url,
-            'description' => $request->description
+            'description' => $request->description,
+            'is_published' => Auth::user()->isAdmin()
         ]);
         //Add the tags for this resource to the pivot table
         $resource->tags()->attach($request->tags);
-        //Put a success message in the flasher
-        $request->session()->flash('success', 'Resource created!');
+        $responseText = 'Resource created';
+        $responseText .= Auth::user()->isAdmin() ? ' and published!' : ' and awaiting review.';
         //Take them back to the resource form so they can add more resources
-        return redirect('/resources/create');
+        return redirect('/resources/create')->with('success', $responseText);
     }
 
     /**
@@ -82,7 +84,12 @@ class ResourceController extends Controller
      */
     public function edit(Resource $resource)
     {
-        //
+        return view(
+                'resources.edit', 
+                [
+                    'resource' => $resource
+                ]
+        );
     }
 
     /**
@@ -94,7 +101,29 @@ class ResourceController extends Controller
      */
     public function update(Request $request, Resource $resource)
     {
-        //
+        //Validate request
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'url' => 'required|max:255',
+            'description' => 'required|max:10000',
+            'tags.*' => 'exists:tags,id',
+            'is_published' => 'required|boolean'
+        ]);
+        //Create the resource
+        $resource->update([
+            'name' => $request->name,
+            'url' => $request->url,
+            'description' => $request->description,
+            'is_published' => $request->is_published
+        ]);
+        //Drop the tags from the pivot table. Add the updated ones
+        $resource->tags()->detach();
+        //Add the tags for this resource to the pivot table
+        $resource->tags()->attach($request->tags);
+        $responseText = 'Resource updated';
+        $responseText .= $request->is_published ? ' and published' : '';
+        //Take them back to the resource form so they can add more resources
+        return back()->with('success', $responseText);
     }
 
     /**
@@ -105,7 +134,8 @@ class ResourceController extends Controller
      */
     public function destroy(Resource $resource)
     {
-        //
+        $resource->delete();
+        return back()->with('info', 'Resource deleted');
     }
 
     /**
@@ -114,14 +144,22 @@ class ResourceController extends Controller
      * @param  String  $tagString  A string of tag names, separated by a +
      * @return \Illuminate\Http\Response
      */
-    public function hasAny(String $tagString)
+    public function hasAny(String $tagString=null)
     {
+        if (!isset($tagString)){
+            return redirect()->action('ResourceController@index');
+        }
         $tagNames = explode('+', $tagString);
+        $invalidNames = $this->getInvalidTagNames($tagNames);
+        if (count($invalidNames) > 0){
+            return back()->with('danger', 'Invalid tag names: ' . implode(', ', $tagNames));
+        }
         $resourcesInfo = DB::table('tags')
                         ->select('resources.id')
                         ->join('resource_tag', 'tags.id', '=', 'resource_tag.tag_id')
                         ->whereIn('tags.name', $tagNames)
                         ->join('resources', 'resource_tag.resource_id', '=', 'resources.id')
+                        ->where('is_published', true)
                         ->groupBy('resources.id')
                         ->inRandomOrder()
                         ->get();
@@ -129,7 +167,7 @@ class ResourceController extends Controller
         $resources = Resource::find($resourceIds);
         return view('resources.index', [
                                             'resources' => $resources, 
-                                            'selected_tags' => $tagNames
+                                            'selected_tags' => Tag::whereIn('name', $tagNames)->get()
                                         ]
         );
     }
@@ -140,15 +178,23 @@ class ResourceController extends Controller
      * @param  String  $tagString  A string of tag names, separated by a +
      * @return \Illuminate\Http\Response
      */
-    public function hasAll(String $tagString)
+    public function hasAll(String $tagString=null)
     {
+        if (!isset($tagString)){
+            return redirect()->action('ResourceController@index');
+        }
         $tagNames = explode('+', $tagString);
+        $invalidNames = $this->getInvalidTagNames($tagNames);
+        if (count($invalidNames) > 0){
+            return back()->with('danger', 'Invalid tag names: ' . implode(', ', $tagNames));
+        }
         $count = count($tagNames);
         $resourcesInfo = DB::table('tags')
                         ->select('resources.id', DB::raw('COUNT(*) AS count'))
                         ->join('resource_tag', 'tags.id', '=', 'resource_tag.tag_id')
                         ->whereIn('tags.name', $tagNames)
                         ->join('resources', 'resource_tag.resource_id', '=', 'resources.id')
+                        ->where('is_published', true)
                         ->groupBy('resources.id')
                         ->havingRaw("count >= $count")
                         ->inRandomOrder()
@@ -157,9 +203,38 @@ class ResourceController extends Controller
         $resources = Resource::find($resourceIds);
         return view('resources.index', [
                                             'resources' => $resources, 
-                                            'selected_tags' => $tagNames
+                                            'selected_tags' => Tag::whereIn('name', $tagNames)->get()
                                         ]
         );
+    }
+
+    public function getUnpublished(Request $request){
+        return view(
+                'resources.unpublished', 
+                [
+                    'resources' => Resource::unpublished()->get()
+                ]
+        );
+    }
+
+    public function publish(Resource $resource){
+        $resource->update(['is_published' => true]);
+        return back()->with('success', 'Resource published');
+    }
+
+    public function unpublish(Resource $resource){
+        $resource->update(['is_published' => false]);
+        return back()->with('info', 'Resource unpublished');
+    }
+
+    private function getInvalidTagNames(Array $tagNames){
+        $invalidNames = [];
+        foreach ($tagNames as $name){
+            if(Tag::where('name', $name)->count() === 0){
+                $invalidNames[] = $name;
+            }
+        }
+        return $invalidNames;
     }
 
 }

@@ -15,7 +15,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        return view('tags.index', ['tags' => Tag::all()]);
     }
 
     /**
@@ -36,14 +36,14 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
+        $request['real_tag_name'] = str_replace(' ', '_', $request->tag_name);
         $this->validate($request, [
-            'tag_name' => 'required|max:255|unique:tags,name|regex:/^[A-Za-z \d]+$/'
+            'real_tag_name' => 'required|max:255|unique:tags,name|regex:/^[A-Za-z_\d]+$/'
         ]);
         Auth::user()->tags()->create([
-            'name' => str_replace(' ', '_', $request->tag_name)
+            'name' => $request->real_tag_name
         ]);
-        $request->session()->flash('success', 'Tag created!');
-        return redirect()->action('ResourceController@create');
+        return redirect()->action('ResourceController@create')->with('success', 'Tag created!');
     }
 
     /**
@@ -77,7 +77,14 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $request['real_tag_name'] = str_replace(' ', '_', $request->tag_name);
+        $this->validate($request, [
+            'real_tag_name' => 'required|max:100|unique:tags,name|regex:/^[A-Za-z_\d]+$/'
+        ]);
+       $tag->update([
+            'name' => $request->real_tag_name
+        ]);
+        return back()->with('success', 'Tag updated');
     }
 
     /**
@@ -88,6 +95,7 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        return back()->with('info', 'Tag deleted');
     }
 }

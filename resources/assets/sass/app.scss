@@ -29,3 +29,33 @@
   padding: 1.2em 0em;
   align-items: center; 
 }
+
+.panel{
+  padding: .5em;
+}
+
+.panel .panel{
+  background-color: #444;
+}
+
+
+.notice{
+  padding: 5px 9px;
+  border-radius: 4px
+}
+
+.red.notice{
+  @extend .bg-danger;
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+
+  

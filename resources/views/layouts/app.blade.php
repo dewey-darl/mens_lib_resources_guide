@@ -61,6 +61,21 @@
                         </li>
                         @if (Auth::user()->isAdmin())
                             <li>
+                                <?php
+                                    $unpublishedLinkText = 'Unpublished Resources';
+                                    $count = \App\Resource::unpublished()->count();
+                                    if ($count > 0){
+                                        $unpublishedLinkText .= "&nbsp;<span class='red notice'>$count</span>";
+                                    }
+                                ?>
+                                <a href="<?= action('ResourceController@getUnpublished');?>">
+                                    <?= $unpublishedLinkText; ?>
+                                </a>
+                            </li>
+                            <li>
+                                {!! link_to_action('TagController@index', 'Tags') !!}
+                            </li>
+                            <li>
                                 {!! link_to_action('UserController@index', 'Users') !!}
                             </li>
                         @endif
@@ -91,7 +106,6 @@
     <div class="container-fluid">
         <div class="col-xs-12 col-md-10 col-md-offset-1">
             @include('common.flash_messages')
-            @include('common.errors')
             @yield('content')
         </div>
     </div>
