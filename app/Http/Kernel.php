@@ -41,6 +41,16 @@ class Kernel extends HttpKernel
             'bindings',
         ],
 
+        //My middleware groups
+        'admin_auth_group' => [
+            'auth',
+            'admin_auth'
+        ],
+
+        'admin_or_self_auth_group' => [
+            'auth',
+            'admin_or_self_auth'
+        ]
     ];
 
     /**
@@ -57,6 +67,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        //My middleware
         'admin_auth' => \App\Http\Middleware\AdminAuth::class,
+        'admin_or_self_auth' => \App\Http\Middleware\AdminOrSelfAuth::class,
     ];
 }

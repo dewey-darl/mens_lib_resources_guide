@@ -36,12 +36,11 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Tag::class);
         $this->validate($request, [
-            'name' => 'required|max:255|unique:tags|regex:/^[A-Za-z \d]+$/'
+            'tag_name' => 'required|max:255|unique:tags,name|regex:/^[A-Za-z \d]+$/'
         ]);
         Auth::user()->tags()->create([
-            'name' => str_replace(' ', '_', $request->name)
+            'name' => str_replace(' ', '_', $request->tag_name)
         ]);
         $request->session()->flash('success', 'Tag created!');
         return redirect()->action('ResourceController@create');

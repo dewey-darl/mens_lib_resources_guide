@@ -16,10 +16,7 @@ class AdminAuth
      */
     public function handle($request, Closure $next)
     {
-        //Require that the user is logged in and an admin
-        if (!Auth::user()){
-            return redirect('login')->with('danger', 'You must be logged in to access that page.');
-        }
+        //Require that the user is an admin
         if (!Auth::user()->isAdmin()){
             return redirect('resources')->with('danger', 'You do not have permission to access that page.');
         }

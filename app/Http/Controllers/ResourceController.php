@@ -18,7 +18,11 @@ class ResourceController extends Controller
     public function index()
     {
         $resources = Resource::all();
-        return view('resources.index', ['resources' => $resources]);
+        return view('resources.index', [
+                                            'resources' => $resources, 
+                                            'selected_tags' => []
+                                        ]
+        );
     }
 
     /**
@@ -28,15 +32,7 @@ class ResourceController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Resource::class);
-        return view(
-                'resources.create', 
-                [
-                    'resource' => new Resource,
-                    'tag' => new Tag,
-                    'tags' => Tag::orderBy('name')->get()
-                ]
-        );
+        return view('resources.create');
     }
 
     /**
@@ -47,8 +43,6 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        //Make sure the user is logged in
-        $this->authorize('create', Resource::class);
         //Validate request
         $this->validate($request, [
             'name' => 'required|max:255|unique:resources',
@@ -133,7 +127,11 @@ class ResourceController extends Controller
                         ->get();
         $resourceIds = array_column($resourcesInfo->all(), 'id');
         $resources = Resource::find($resourceIds);
-        return view('resources.index', ['resources' => $resources]);
+        return view('resources.index', [
+                                            'resources' => $resources, 
+                                            'selected_tags' => $tagNames
+                                        ]
+        );
     }
 
     /**
@@ -157,7 +155,11 @@ class ResourceController extends Controller
                         ->get();
         $resourceIds = array_column($resourcesInfo->all(), 'id');
         $resources = Resource::find($resourceIds);
-        return view('resources.index', ['resources' => $resources]);
+        return view('resources.index', [
+                                            'resources' => $resources, 
+                                            'selected_tags' => $tagNames
+                                        ]
+        );
     }
 
 }

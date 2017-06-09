@@ -1,10 +1,14 @@
 
+<?php
+	$tags = \App\Tag::orderBy('name')->get();
+?>
+
 @extends('layouts.app')
 
 @section('content')
 
 <div class="col-xs-8">
-	{!! Form::model($resource, ['action' => 'ResourceController@store']) !!}
+	{!! Form::model(new \App\Resource, ['action' => 'ResourceController@store']) !!}
 	<div class="form-group">
 		{!! Form::label('name') !!}
 		{!! Form::text('name', null, ['class' => 'form-control', 'required' => true]) !!}
@@ -31,11 +35,9 @@
 			@endforeach
 		</div>
 	</div>
-	<div class="tag-cloud">
-		@foreach($tags as $tag)
-			@include('templates.tag_button', ['tag' => $tag])
-		@endforeach
-	</div>
+
+	@include('templates.tag_cloud')
+
 	<script>
 		//Hide all the tags in the tag-input element
 		$(".tag-input .tag").hide();
@@ -65,10 +67,10 @@
 </div>
 
 <div class="col-xs-3 col-xs-offset-1">
-	{!! Form::model($tag, ['action' => 'TagController@store']) !!}
+	{!! Form::model(new \App\Tag, ['action' => 'TagController@store']) !!}
 	<div class="form-group">
-		{!! Form::label('name') !!}
-		{!! Form::text('name', null, ['class' => 'form-control', 'required' => true]) !!}
+		{!! Form::label('tag_name', 'Name') !!}
+		{!! Form::text('tag_name', null, ['class' => 'form-control', 'required' => true]) !!}
 	</div>
 	{!! Form::submit('Add Tag', ['class' => 'btn btn-default']) !!}
 	{!! Form::close() !!}
