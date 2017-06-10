@@ -61,12 +61,21 @@
 		</div>
 		<div class="form-group">
 			{!! Form::label('description') !!}
-			{!! Form::textarea('description', $orfd->description, ['class' => 'form-control', 'required' => true]) !!}
+			{!! Form::textarea('description', $orfd->description, 
+					['class' => 'form-control', 'required' => true, 'id'=>'description-field']) !!}
 		</div>
 		@include('templates.tag_selector', ['selected_tags' => $selected_tags])
 		<br/><br/>
-		@include('templates.buttons.post', ['text' => 'Add Resource'])
+		@include('templates.buttons.post', 
+					['text' => 'Add Resource', 'type' => 'button', 'class' => 'new-resources-submit-btn'])
 	{!! Form::close() !!}
+	<script>
+		var simplemde = new SimpleMDE({ element: $("textarea")[0] });
+		$('#new-resource-form .new-resources-submit-btn').click(function(){
+			$('#description-field').val(simplemde.value());
+			$('#new-resource-form').submit();
+		})
+	</script>
 </div>
 
 <div class="col-xs-3 col-xs-offset-1">
@@ -77,6 +86,8 @@
 		//in the tag form, then submits the tag form, so that the old resource input will be available
 		//after the redirect
 		$('#new-tag-form').submit(function(){
+			console.log("works");
+			e.preventDefault();
 			$(this).find('#resource_form_input').val($('#new-resource-form').serializeJSON());
 			$(this).submit();
 		});

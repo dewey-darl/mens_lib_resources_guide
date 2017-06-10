@@ -17305,6 +17305,9 @@ a.list-group-item-danger.active:focus {
   min-height: 75vh;
 }
 
+.editor-toolbar{
+  background-color: white;
+}
 
 
 

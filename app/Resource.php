@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 class Resource extends Model
 {
@@ -14,6 +15,10 @@ class Resource extends Model
 
     function tags(){
     	return $this->belongsToMany(Tag::class);
+    }
+
+    function htmlDescription(){
+        return Markdown::convertToHtml($this->description);
     }
 
     static function published(){

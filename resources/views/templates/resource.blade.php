@@ -4,7 +4,7 @@
 		<div class="col-xs-12">
 			<h4><a href="{{$resource->url}}">{{$resource->name}}</a></h4>
 			<div>
-				{{$resource->description}}
+				{!! $resource->htmlDescription() !!}
 			</div>
 			<br/>
 			<div>
@@ -49,7 +49,7 @@
 					@include('templates.buttons.edit', ['text' => ucfirst($publishFormAction)])
 				{!! Form::close() !!}
 
-				@include('templates.safe_delete_form', ['model' => $resource, 'class' => 'col-xs-3'])
+				@include('templates.safe_delete_form', ['model' => $resource, 'class' => 'col-xs-6'])
 				
 			</div>
 		@endif
