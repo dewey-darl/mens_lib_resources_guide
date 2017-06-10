@@ -43,7 +43,7 @@ class TagController extends Controller
         Auth::user()->tags()->create([
             'name' => $request->_tag_name
         ]);
-        return back()->with('success', 'Tag created!');
+        return back()->with('success', 'Tag created!')->withInput(['resource_form_input' => $request->resource_form_input]);
     }
 
     /**

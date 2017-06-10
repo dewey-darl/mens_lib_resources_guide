@@ -1,0 +1,7 @@
+
+When submitting a new tag from the create resource page, it'd be nice if the previous inserted form data for the resource would stay after the tag was created
+
+
+Tag list is long. Made 'show search bar' button on home page
+
+Add new tag form to the tags page

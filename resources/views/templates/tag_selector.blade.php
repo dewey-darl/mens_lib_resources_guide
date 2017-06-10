@@ -10,6 +10,9 @@
 		{{-- Tags that are in $selected_tags will have their checkbox checked --}}
 		{!! Form::checkbox("tags[]", $tag->id, (bool)$selected_tags->where('id', $tag->id)->count()) !!}
 	@endforeach
+	<script>
+		//This script 
+	</script>
 </div>
 <div class="form-group">
 	{!! Form::label('tags') !!}
