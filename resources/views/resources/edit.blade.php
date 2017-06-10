@@ -30,9 +30,9 @@
 		@include('templates.tag_selector', ['selected_tags' => $resource->tags()->get()])
 		<br/>
 		{!! Form::hidden('is_published') !!}
-		{!! Form::submit('Update Resource', ['class' => 'btn btn-info']) !!}
+		@include('templates.buttons.post', ['text' => 'Update Resource'])
 		@if (!$resource->is_published)
-			{!! Form::button('Update and Publish', ['class' => 'btn btn-info update-and-publish']) !!}
+			@include('templates.buttons.post', ['text' => 'Update and Publish', 'class' => 'update-and-publish'])
 			<script>
 				$(".update-and-publish").click(function(){
 					$('[name=is_published]').val(1);
@@ -41,6 +41,13 @@
 			</script>
 		@endif
 {!! Form::close() !!}
+<script>
+		var simplemde = new SimpleMDE({ element: $("textarea")[0] });
+		$('#new-resource-form .new-resources-submit-btn').click(function(){
+			$('#description-field').val(simplemde.value());
+			$('#new-resource-form').submit();
+		})
+	</script>
 </div>
 <div class="col-xs-12 col-md-4">
 	<h2>Add a Tag</h2>

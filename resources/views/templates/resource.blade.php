@@ -1,8 +1,9 @@
 
-<div class="row">
+<div class="row resource">
 	<div class="col-xs-12 col-md-10 col-md-offset-1 panel">
 		<div class="col-xs-12">
-			<h4><a href="{{$resource->url}}">{{$resource->name}}</a></h4>
+			<h3><a href="{{$resource->url}}">{{$resource->name}}</a></h3>
+			<div>&nbsp;</div>
 			<div>
 				{!! $resource->htmlDescription() !!}
 			</div>

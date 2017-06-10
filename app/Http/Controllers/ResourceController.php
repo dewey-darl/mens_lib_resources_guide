@@ -109,6 +109,7 @@ class ResourceController extends Controller
             'tags.*' => 'exists:tags,id',
             'is_published' => 'required|boolean'
         ]);
+        $resource_previous_unpublished = !$resource->is_published;
         //Create the resource
         $resource->update([
             'name' => $request->name,
@@ -121,7 +122,7 @@ class ResourceController extends Controller
         //Add the tags for this resource to the pivot table
         $resource->tags()->attach($request->tags);
         $responseText = 'Resource updated';
-        $responseText .= $request->is_published ? ' and published' : '';
+        $responseText .= $resource_previous_unpublished && $request->is_published ? ' and published' : '';
         //Take them back to the resource form so they can add more resources
         return back()->with('success', $responseText);
     }

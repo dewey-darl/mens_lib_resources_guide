@@ -8,6 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link rel="icon" href="/favicon.ico">
+
     <title>Mens Lib Resources Guide @yield('title')</title>
 
     <!-- Styles -->
@@ -61,11 +63,9 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
-                        {{--
                         <li>
                             {!! link_to_action('ResourceController@index', 'Resources') !!}
                         </li>
-                        --}}
                         <li>
                             {!! link_to_action('ResourceController@create', 'Add Resource') !!}
                         </li>
