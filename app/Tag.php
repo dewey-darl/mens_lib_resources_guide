@@ -21,6 +21,7 @@ class Tag extends Model
     	return str_replace('_', ' ', $this->name);
     }
 
+    
     protected static function boot()
     {
         parent::boot();

@@ -4,6 +4,8 @@
 		$controller = class_basename($model) . 'Controller';
 	if (!isset($deleteMethod))
 		$deleteMethod = 'destroy';
+	if (!isset($buttonText))
+		$buttonText = 'Delete ' . ucfirst(class_basename($model));
 ?>
 
 {!! 
@@ -17,5 +19,5 @@
 	) 
 !!}
 <?php unset($class); ?>
-@include('templates.safe_submit', ['buttonText' => 'Delete ' . class_basename($model)])
+@include('templates.safe_submit', ['buttonText' => $buttonText])
 {!! Form::close() !!}

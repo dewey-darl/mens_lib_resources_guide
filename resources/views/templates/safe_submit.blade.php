@@ -8,7 +8,7 @@
 		$noText = 'No';
 ?>
 
-@include('templates.buttons.safe_delete')
+@include('templates.buttons.safe_delete', ['text' => $buttonText])
 <div class="submit-decision" style="display:none;">
 	<br/>
 	<div class="alert alert-warning">

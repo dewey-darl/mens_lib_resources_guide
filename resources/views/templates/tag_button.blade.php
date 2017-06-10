@@ -1,5 +1,5 @@
 
-<span 
+<a 
 	class="tag tag-btn" data-name="{{$tag->name}}" 
 	data-id="{{$tag->id}}"
 	@if(isset($hidden) && $hidden)
@@ -7,4 +7,4 @@
 	@endif
 >
 	{{ $tag->readableName() }}
-</span>
+</a>

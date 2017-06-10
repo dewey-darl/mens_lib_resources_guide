@@ -5,10 +5,12 @@
 	@foreach ($tags as $tag)
 		<div class="row">
 			<h3 class='col-xs-12'>{{$tag->readableName()}}</h3>
+			<div class="col-xs-12">
+				Created by {{$tag->user['username']}} on {{date('F jS, Y', strtotime($tag->created_at))}}
+			</div>
+			<div class="col-xs-12">&nbsp;</div>
 			<div class="col-xs-6">
-				<div class='btn btn-info edit-btn'>
-					Edit&nbsp;&nbsp;&nbsp;@include('templates.glyphicon', ['type' => 'pencil'])
-				</div>
+				@include('templates.buttons.edit', ['text' => 'Edit', 'class' => 'edit-btn'])
 				<br/><br/>
 				<div class="">
 					{!! 
@@ -25,8 +27,8 @@
 						<div class="form-group">
 							{!! Form::text('tag_name', $tag->name, ['class' => 'form-control']) !!}
 						</div>
-						{!! Form::submit('Update', ['class' => 'btn btn-success']) !!}
-						{!! Form::button('Cancel', ['class' => 'btn btn-primary cancel-btn']) !!}
+						@include('templates.buttons.post', ['text' => 'Update'])
+						@include('templates.buttons.cancel', ['text' => 'Cancel', 'class' => 'cancel-btn'])
 					{!! Form::close() !!}
 				</div>
 			</div>

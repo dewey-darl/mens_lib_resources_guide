@@ -36,7 +36,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Resources Guide
+                    Men's Lib Resources Guide
                 </a>
             </div>
 
@@ -53,9 +53,11 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
+                        {{--
                         <li>
                             {!! link_to_action('ResourceController@index', 'Resources') !!}
                         </li>
+                        --}}
                         <li>
                             {!! link_to_action('ResourceController@create', 'Add Resource') !!}
                         </li>
@@ -86,6 +88,9 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li>
+                                    {!! link_to_action('UserController@show', 'My Account', [Auth::user()]) !!}
+                                </li>
+                                <li>
                                     <a href="{{ url('/logout') }}"
                                         onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
@@ -112,6 +117,6 @@
     <footer class="footer">
         Men's Lib Resources Guide&nbsp;&nbsp;|
         &nbsp;&nbsp;<a href="https://reddit.com/r/menslib" target="_blank">Subreddit</a>&nbsp;&nbsp;|
-        &nbsp;&nbsp;<a href="" target="_blank">Contact Creator</a>
+        &nbsp;&nbsp;<a href="https://www.reddit.com/message/compose/?to=dewey_darl" target="_blank">Contact Creator</a>
     </footer>
 </body>

@@ -6,11 +6,16 @@
 			<div>
 				{{$resource->description}}
 			</div>
+			<br/>
 			<div>
 				@foreach ($resource->tags as $tag)
 					@include('templates.tag', ['tag' => $tag])
 				@endforeach
 			</div>
+		<hr/>
+		</div>
+		<div class="col-xs-12">
+			Created by {{$resource->user->username}} on {{date('F jS, Y', strtotime($resource->created_at))}}
 		</div>
 		@if(Auth::user() && Auth::user()->isAdmin())
 			

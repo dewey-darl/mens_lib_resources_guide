@@ -46,6 +46,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        if (!$user) return 'bad';
         return view('users.show', ['user' => $user]);
     }
 
