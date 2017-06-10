@@ -104,9 +104,14 @@
         </div>
     </nav>
     <div class="container-fluid">
-        <div class="col-xs-12 col-md-10 col-md-offset-1">
+        <div class="col-xs-12 col-md-10 col-md-offset-1" id="main">
             @include('common.flash_messages')
             @yield('content')
         </div>
     </div>
+    <footer class="footer">
+        Men's Lib Resources Guide&nbsp;&nbsp;|
+        &nbsp;&nbsp;<a href="https://reddit.com/r/menslib" target="_blank">Subreddit</a>&nbsp;&nbsp;|
+        &nbsp;&nbsp;<a href="" target="_blank">Contact Creator</a>
+    </footer>
 </body>

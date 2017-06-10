@@ -16,12 +16,18 @@
 			
 			<div class="col-xs-12">
 				<hr/>
-				<div class="col-xs-1">
-				<a target="_blank" href="<?= action('ResourceController@edit', ['resource' => $resource->id]); ?>" 
-					class="btn btn-info">
-					Edit
-				</a>
-				</div>
+				{!! 
+					Form::open(
+						[
+							'method' => 'get', 
+							'action' => ["ResourceController@edit", $resource],
+							'class' => 'col-xs-3',
+							'target' => '_blank'
+						]
+					) 
+				!!}
+					@include('templates.buttons.edit')
+				{!! Form::close() !!}
 
 				<?php 
 					$publishFormAction = $resource->is_published ? 'unpublish' : 'publish';
@@ -31,14 +37,14 @@
 						[
 							'method' => 'put', 
 							'action' => ["ResourceController@$publishFormAction", $resource],
-							'class' => 'col-xs-2'
+							'class' => 'col-xs-3'
 						]
 					) 
 				!!}
-					{!! Form::submit(ucwords($publishFormAction), ['class' => 'btn btn-info']) !!}
+					@include('templates.buttons.edit', ['text' => ucfirst($publishFormAction)])
 				{!! Form::close() !!}
 
-				@include('templates.safe_delete_form', ['model' => $resource])
+				@include('templates.safe_delete_form', ['model' => $resource, 'class' => 'col-xs-3'])
 				
 			</div>
 		@endif

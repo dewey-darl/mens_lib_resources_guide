@@ -11,9 +11,11 @@
 		$model, 
 		[
 			'method' => 'delete',
-			'action' => ["$controller@$deleteMethod", $model]
+			'action' => ["$controller@$deleteMethod", $model],
+			'class' => isset($class) ? $class : ''
 		]
 	) 
 !!}
+<?php unset($class); ?>
 @include('templates.safe_submit', ['buttonText' => 'Delete ' . class_basename($model)])
 {!! Form::close() !!}

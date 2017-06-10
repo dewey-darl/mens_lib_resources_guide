@@ -1,9 +1,8 @@
 <?php
-	//Default type for delete is button. For everything else it's submit
 	if (!isset($text))
 		$text = 'Delete';
 	if (!isset($type))
-		$type = 'Button';
+		$type = 'submit';
 ?>
-@include('templates._button', 
-			['action' => 'delete', 'text' => $text, 'button_type' => $type], 'classes' => isset($class) ? $class : null);
+@include('templates.buttons._button', 
+			['action' => 'delete', 'text' => $text, 'button_type' => $type, 'extra_classes' => isset($class) ? $class : null])
