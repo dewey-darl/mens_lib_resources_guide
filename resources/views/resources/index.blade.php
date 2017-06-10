@@ -33,9 +33,8 @@
 				});
 				var queryString = tagsSelected.join('+');
 				var redirectUrl = '/resources/';
-				redirectUrl += $(this).hasClass('has-any') ? 'has-any/' : 'has-all/';
+				redirectUrl += $(this).hasClass('search-any') ? 'has-any/' : 'has-all/';
 				redirectUrl += queryString;
-				console.log(redirectUrl);
 				window.location.href = redirectUrl; 
 			});
 		</script>

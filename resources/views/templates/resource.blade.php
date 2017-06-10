@@ -12,12 +12,12 @@
 				@endforeach
 			</div>
 		</div>
-		@if(Auth::user()->isAdmin())
+		@if(Auth::user() && Auth::user()->isAdmin())
 			
 			<div class="col-xs-12">
 				<hr/>
 				<div class="col-xs-1">
-				<a href="<?= action('ResourceController@edit', ['resource' => $resource->id]); ?>" 
+				<a target="_blank" href="<?= action('ResourceController@edit', ['resource' => $resource->id]); ?>" 
 					class="btn btn-info">
 					Edit
 				</a>

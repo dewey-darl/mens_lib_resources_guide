@@ -46,7 +46,7 @@ class ResourceController extends Controller
         //Validate request
         $this->validate($request, [
             'name' => 'required|max:255|unique:resources',
-            'url' => 'required|max:255|unique:resources',
+            'url' => 'required|max:255|unique:resources|active_url',
             'description' => 'required|max:10000',
             'tags.*' => 'exists:tags,id'
         ]);
