@@ -17,7 +17,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        $resources = Resource::published()->get();
+        $resources = Resource::published()->latest()->get();
         return view('resources.index', [
                                             'resources' => $resources, 
                                             'selected_tags' => collect([])
@@ -212,7 +212,7 @@ class ResourceController extends Controller
         return view(
                 'resources.unpublished', 
                 [
-                    'resources' => Resource::unpublished()->get()
+                    'resources' => Resource::unpublished()->oldest()->get()
                 ]
         );
     }
