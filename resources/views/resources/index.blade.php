@@ -28,7 +28,7 @@
 	<div class="col-xs-12">&nbsp;</div>
 	<div class="col-xs-12">&nbsp;</div>
 	<div class="col-xs-12 col-md-10 col-md-offset-1 panel">
-		<button type="button" class="btn btn-info btn-lg collapse-btn" data-toggle='collapse' data-target='#resource-search-form'>
+		<button type="button" class="btn btn-info btn-lg collapse-btn" data-toggle='collapse' data-target='#search-form'>
 			<span class="text">
 				Search for Resources&nbsp;&nbsp;@include('templates.glyphicon', ['type' => 'chevron-right'])
 			</span> 
@@ -41,20 +41,34 @@
 				$(this).find('.text').toggle();
 			});
 		</script>
-		{!! Form::open(['id' => 'resource-search-form', 'class' => 'collapse']) !!}
+		<div id='search-form' class='collapse'>
 			<div class="col-xs-12">&nbsp;</div>
 			<!-- Hidden checkbox field for tags -->
-			@include('templates.tag_selector', ['selected_tags' => $selected_tags])
+			@include('templates.tag_selector', ['selected_tags' => isset($selected_tags) ? $selected_tags : null])
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
 			<?php $glyphicon = view('templates.glyphicon', ['type' => 'search'])->render() . '&nbsp;'; ?>
-			{!! Form::button($glyphicon . 'Get Resources With Any Of These Tags', ['class' => 'btn btn-info search-any']) !!}
+			@include('templates.buttons.search', 
+				['text' => 'Get Resources With Any Of These Tags', 'class' => 'search-any'])
 			&nbsp;
-			{!! Form::button($glyphicon . 'Get Resources With All Of These Tags', ['class' => 'btn btn-info search-all']) !!}
-		{!! Form::close() !!}
+			@include('templates.buttons.search', 
+				['text' => 'Get Resources With All Of These Tags', 'class' => 'search-any'])
+			<div>&nbsp;</div>
+			<hr/>
+			<div id='search-text-container' class="form">
+					{!! Form::label('search-text', 'Text-based search') !!}
+					{!! Form::text('search-text', null, ['class' => 'form-control', 'id' => 'text-search-input']) !!}
+					<br/>
+					@include('templates.buttons.search', 
+						['text' => 'Search', 'class' => 'search-text'])
+				</div>
+			</div>
+
+		</div>
 	</div>
 		<script>
-			$(".search-any, .search-all").click(function(){
+			$(".search-any, .search-all").click(function(e){
+				e.preventDefault();
 				var tagsSelected = [];
 				$('.hidden-tag-fields input:checked').each(function(i, e){
 					//Get tag name by finding the tag this checkbox references (the checkbox value is the tag id)
@@ -66,6 +80,12 @@
 				var redirectUrl = '/resources/';
 				redirectUrl += $(this).hasClass('search-any') ? 'has-any/' : 'has-all/';
 				redirectUrl += queryString;
+				window.location.href = redirectUrl; 
+			});
+			$('.search-text').click(function(){
+				var queryString = $('#text-search-input').val().split(' ').join('+').toLowerCase();
+				var redirectUrl = '/resources/search/' + queryString;
+				console.log(redirectUrl);
 				window.location.href = redirectUrl; 
 			});
 		</script>

@@ -60,6 +60,11 @@ Route::get('resources', 'ResourceController@index');
 
 Route::get('resources/has-all/{query?}', 'ResourceController@hasAll');
 Route::get('resources/has-any/{query?}', 'ResourceController@hasAny');
+Route::get('resources/search/{query?}', 'ResourceController@search');
+
+Route::get('resources/about', function(){
+	return view('about')->render();
+});
 
 
 

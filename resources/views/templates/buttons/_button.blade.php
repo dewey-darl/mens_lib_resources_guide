@@ -20,6 +20,9 @@
 	elseif ($action === 'cancel') : //For cancelling safe deletes
 		$baseClass .= 'btn-default';
 		$glyphiconType = 'remove';
+	elseif ($action === 'search') :
+		$baseClass .= 'btn-info';
+		$glyphiconType = 'search';
 	endif;
 
 	$class = $baseClass . ' ' . $extra_classes;

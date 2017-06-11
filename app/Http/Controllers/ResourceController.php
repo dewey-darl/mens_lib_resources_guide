@@ -209,6 +209,32 @@ class ResourceController extends Controller
         );
     }
 
+
+    public function search(String $searchString=null){
+        if (!isset($searchString)){
+            return redirect()->action('ResourceController@index');
+        }
+        $searchTerms = explode('+', $searchString);
+        $collection = collect([]);
+        foreach ($searchTerms as $term){
+            $collection = $collection->merge(
+                DB::table('resources')
+                    ->select('id')
+                    ->whereRaw(" 
+                        LOWER(name) LIKE '%{$term}%' 
+                        OR LOWER(description) LIKE '%{$term}%'
+                        OR LOWER(url) LIKE '%{$term}%'
+                    ")
+                    ->get()
+            );
+        }
+        $resourceIds = array_column($collection->all(), 'id');
+        $resources = Resource::find($resourceIds);
+        return view('resources.index', ['resources' => $resources]);
+    }
+
+
+
     public function getUnpublished(Request $request){
         return view(
                 'resources.unpublished', 

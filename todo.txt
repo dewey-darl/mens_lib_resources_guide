@@ -3,13 +3,17 @@ TODO
 
 Make update validation check for uniqueness against every other record
 
-Add instructional blurb at the top of the home page
 
 Consider pagination
 
 Consider text search form for resources
 
 On the 'edit post' page, add a 'Add to resource and update' button under the tag form
+
+Save check glyphicon for updating. Use plus glyphicon for store.
+
+Considering letting user decide on certain settings, like whether the tags are in cloud form or column form, or 
+different themes
 
 
 
@@ -24,3 +28,5 @@ Tag list is long. Made 'show search bar' button on home page
 Add new tag form to the tags page
 
 Take away 'updated and published' text for resources already published
+
+Add instructional blurb at the top of the home page
