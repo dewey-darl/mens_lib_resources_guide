@@ -71,7 +71,7 @@
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
                         <li>
-                            {!! link_to_action('ResourceController@create', 'Add Resource') !!}
+                            {!! link_to_action('ResourceController@create', 'Add Resources') !!}
                         </li>
                         @if (Auth::user()->isAdmin())
                             <li>

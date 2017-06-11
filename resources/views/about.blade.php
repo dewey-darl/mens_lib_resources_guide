@@ -22,6 +22,9 @@
 	Bellow the group of tags, you'll see two buttons. One says "Get Resources With Any of These Tags". The other says 
 	"Get Resources With All of These Tags". Clicking the first one will show you resources that match any one of the tags in the search bar. Clicking the second will show you resources that have all of the tags in the search bar.
 	</p>
+	<h3>Questions and Comments</h3>
+	Feel free to get in touch with the creator of the site <a href="https://www.reddit.com/message/compose/?to=dewey_darl" target="_blank">here</a>.
+	You can also check out the code for the site on <a href="https://github.com/dewey-darl/mens_lib_resources_guide">github</a>.
 </div>
 
 @endsection
