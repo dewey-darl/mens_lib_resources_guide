@@ -38,7 +38,7 @@ class TagController extends Controller
     {
         $request['_tag_name'] = str_replace(' ', '_', $request->tag_name);
         $this->validate($request, [
-            '_tag_name' => 'required|max:255|unique:tags,name|regex:/^[A-Za-z_\d]+$/'
+            '_tag_name' => 'required|max:25|unique:tags,name|regex:/^[A-Za-z_\d\/]+$/'
         ]);
         Auth::user()->tags()->create([
             'name' => $request->_tag_name
@@ -77,12 +77,12 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        $request['real_tag_name'] = str_replace(' ', '_', $request->tag_name);
+        $request['_tag_name'] = str_replace(' ', '_', $request->tag_name);
         $this->validate($request, [
-            'real_tag_name' => 'required|max:100|unique:tags,name|regex:/^[A-Za-z_\d]+$/'
+            '_tag_name' => 'required|max:25|unique:tags,name|regex:/^[A-Za-z_\d\/]+$/'
         ]);
        $tag->update([
-            'name' => $request->real_tag_name
+            'name' => $request->_tag_name
         ]);
         return back()->with('success', 'Tag updated');
     }

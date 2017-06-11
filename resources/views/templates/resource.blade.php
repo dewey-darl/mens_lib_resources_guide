@@ -2,7 +2,7 @@
 <div class="row resource">
 	<div class="col-xs-12 col-md-10 col-md-offset-1 panel">
 		<div class="col-xs-12">
-			<h3><a href="{{$resource->url}}">{{$resource->name}}</a></h3>
+			<h3><a href="{{$resource->url}}" target="_blank">{{$resource->name}}</a></h3>
 			<div>&nbsp;</div>
 			<div>
 				{!! $resource->htmlDescription() !!}

@@ -40,7 +40,7 @@
 		<div>&nbsp;</div>
 		<div id="user-{{$user->id}}-tags" class="collapse col-xs-12">
 			<br/>
-			@include('templates.tag_cloud', ['tags' => $user->tags()->get()])
+			@include('templates.tag_cloud', ['tags' => $user->tags()->get(), 'columns', 6])
 		</div>
 		<div>&nbsp;</div>
 		<div class="col-xs-12">

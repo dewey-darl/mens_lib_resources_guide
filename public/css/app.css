@@ -17264,10 +17264,14 @@ a.list-group-item-danger.active:focus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 1.2em 0em;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: initial;
+  min-height: 3em;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  padding: 0;
 }
 
 .panel {

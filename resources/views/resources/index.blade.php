@@ -45,7 +45,8 @@
 			<div class="col-xs-12">&nbsp;</div>
 			<!-- Hidden checkbox field for tags -->
 			@include('templates.tag_selector', ['selected_tags' => $selected_tags])
-			<br/><br/>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
 			<?php $glyphicon = view('templates.glyphicon', ['type' => 'search'])->render() . '&nbsp;'; ?>
 			{!! Form::button($glyphicon . 'Get Resources With Any Of These Tags', ['class' => 'btn btn-info search-any']) !!}
 			&nbsp;
