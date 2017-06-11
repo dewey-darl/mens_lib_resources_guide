@@ -28,6 +28,7 @@
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="/js/serializeObject.js"></script>    
+    <script src="/js/js-cookie.js"></script>
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
 </head>
@@ -58,14 +59,17 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        {!! link_to_action('ResourceController@index', 'Resources') !!}
+                    </li>
+                    <li>
+                        <a href="/resources/about">About</a>
+                    </li>
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
-                        <li>
-                            {!! link_to_action('ResourceController@index', 'Resources') !!}
-                        </li>
                         <li>
                             {!! link_to_action('ResourceController@create', 'Add Resource') !!}
                         </li>
