@@ -62,11 +62,11 @@
                     <li>
                         {!! link_to_action('ResourceController@index', 'Resources') !!}
                     </li>
-                    <li>
-                        <a href="/resources/about">About</a>
-                    </li>
                     <!-- Authentication Links -->
                     @if (Auth::guest())
+                        <li>
+                            <a href="/resources/about">About</a>
+                        </li>
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
@@ -93,6 +93,9 @@
                                 {!! link_to_action('UserController@index', 'Users') !!}
                             </li>
                         @endif
+                        <li>
+                            <a href="/resources/about">About</a>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->username }} <span class="caret"></span>

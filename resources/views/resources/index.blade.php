@@ -52,7 +52,7 @@
 				['text' => 'Get Resources With Any Of These Tags', 'class' => 'search-any'])
 			&nbsp;
 			@include('templates.buttons.search', 
-				['text' => 'Get Resources With All Of These Tags', 'class' => 'search-any'])
+				['text' => 'Get Resources With All Of These Tags', 'class' => 'search-all'])
 			<div>&nbsp;</div>
 			<hr/>
 			<div id='search-text-container' class="form">
@@ -61,9 +61,7 @@
 					<br/>
 					@include('templates.buttons.search', 
 						['text' => 'Search', 'class' => 'search-text'])
-				</div>
 			</div>
-
 		</div>
 	</div>
 		<script>
@@ -90,10 +88,20 @@
 			});
 		</script>
 </div>
-<br/><br/>
 
+@if ($resources->count() > 0)
 	@foreach ($resources as $resource)
 		@include('templates.resource', ['resource' => $resource])
 	@endforeach
+@else
+	<div class="row">
+		<h4 class="col-xs-10 col-xs-offset-1">Sorry, we couldn't find any resources matching your search criteria.</h4>
+	</div>
+@endif
 
 @endsection
+
+
+
+
+

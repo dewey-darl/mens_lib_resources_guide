@@ -4,7 +4,9 @@
 			@include('templates.alert', ['type' => $type, 'message' => Session::get($type)])
 		@endif
 	@endforeach
-	@foreach ($errors->all() as $error)
-        @include('templates.alert', ['type' => 'danger', 'message' => $error])
-    @endforeach
+	@if (isset($errors))
+		@foreach ($errors->all() as $error)
+	        @include('templates.alert', ['type' => 'danger', 'message' => $error])
+	    @endforeach
+	@endif
 </div> <!-- end .flash-message -->

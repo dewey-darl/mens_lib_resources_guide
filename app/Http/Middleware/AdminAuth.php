@@ -18,7 +18,8 @@ class AdminAuth
     {
         //Require that the user is an admin
         if (!Auth::user()->isAdmin()){
-            return redirect('resources')->with('danger', 'You do not have permission to access that page.');
+            abort(404);
+            //return redirect('resources')->with('danger', 'You do not have permission to access that page.');
         }
         return $next($request);
     }

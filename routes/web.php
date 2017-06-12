@@ -67,6 +67,12 @@ Route::get('resources/about', function(){
 });
 
 
+//Bad routes that we still want to handle
+Route::any('{all}', function(){
+    abort(404);
+})->where('all', '.*');
+
+
 
 
 
