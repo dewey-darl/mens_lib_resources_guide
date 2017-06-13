@@ -62,40 +62,33 @@
                     <li>
                         {!! link_to_action('ResourceController@index', 'Resources') !!}
                     </li>
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
+                    <li>
+                        {!! link_to_action('ResourceController@create', 'Add Resources') !!}
+                    </li>
+                    @if (Auth::user() && Auth::user()->isAdmin())
                         <li>
-                            <a href="/resources/about">About</a>
+                            <?php
+                                $unpublishedLinkText = 'Unpublished Resources';
+                                $count = \App\Resource::unpublished()->count();
+                                if ($count > 0){
+                                    $unpublishedLinkText .= "&nbsp;<span class='red notice'>$count</span>";
+                                }
+                            ?>
+                            <a href="<?= action('ResourceController@getUnpublished');?>">
+                                <?= $unpublishedLinkText; ?>
+                            </a>
                         </li>
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
                         <li>
-                            {!! link_to_action('ResourceController@create', 'Add Resources') !!}
+                            {!! link_to_action('TagController@index', 'Tags') !!}
                         </li>
-                        @if (Auth::user()->isAdmin())
-                            <li>
-                                <?php
-                                    $unpublishedLinkText = 'Unpublished Resources';
-                                    $count = \App\Resource::unpublished()->count();
-                                    if ($count > 0){
-                                        $unpublishedLinkText .= "&nbsp;<span class='red notice'>$count</span>";
-                                    }
-                                ?>
-                                <a href="<?= action('ResourceController@getUnpublished');?>">
-                                    <?= $unpublishedLinkText; ?>
-                                </a>
-                            </li>
-                            <li>
-                                {!! link_to_action('TagController@index', 'Tags') !!}
-                            </li>
-                            <li>
-                                {!! link_to_action('UserController@index', 'Users') !!}
-                            </li>
-                        @endif
                         <li>
-                            <a href="/resources/about">About</a>
+                            {!! link_to_action('UserController@index', 'Users') !!}
                         </li>
+                    @endif
+                    <li>
+                        <a href="/resources/about">About</a>
+                    </li>
+                    @if (Auth::user())    
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->username }} <span class="caret"></span>
@@ -118,6 +111,9 @@
                                 </li>
                             </ul>
                         </li>
+                    @else
+                        <li><a href="{{ url('/login') }}">Login</a></li>
+                        <li><a href="{{ url('/register') }}">Register</a></li>
                     @endif
                 </ul>
             </div>

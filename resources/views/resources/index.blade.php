@@ -14,16 +14,11 @@
 <div class="row">
 	<div class="col-xs-12 col-md-10 col-md-offset-1">
 		<h1>Welcome to the Men's Lib resources guide!</h1>
-		Here you'll find a vast array of resources geared towards men in a variety of situatoins with a variate of backgrounds.
+		Here you'll find a collectiong of resources geared towards men in a variety of situatoins and with a variate of backgrounds.
 		<br/><br/>
 		<a href="/resources/about">Click here</a> to find out how the search form works.
 		<br/><br/>
-		@if (!Auth::user())
-			If you'd like to help the cause and add some resources of your own, 
-			<a href="/register">sign up</a> or <a href="/login">log in</a>.
-		@else
-			<a href="/resources/create">Click here</a> to add resources to the database.
-		@endif
+		{!! link_to_action('ResourceController@create', 'Click here') !!} to add resources to the database.
 	</div>
 	<div class="col-xs-12">&nbsp;</div>
 	<div class="col-xs-12">&nbsp;</div>

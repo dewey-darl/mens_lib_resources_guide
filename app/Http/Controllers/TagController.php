@@ -40,10 +40,15 @@ class TagController extends Controller
         $this->validate($request, [
             '_tag_name' => 'required|max:25|unique:tags,name|regex:/^[A-Za-z_\d\/]+$/'
         ]);
-        Auth::user()->tags()->create([
-            'name' => $request->_tag_name
-        ]);
-        return back()->with('success', 'Tag created!')->withInput(['resource_form_input' => $request->resource_form_input]);
+        if (Auth::user()){
+            Auth::user()->tags()->create([
+                'name' => $request->_tag_name
+            ]);
+        }
+        else {
+            Tag::create(['name' => $request->_tag_name]);
+        }
+        return back()->with('success', 'Tag created!');
     }
 
     /**

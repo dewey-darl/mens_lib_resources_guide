@@ -8,8 +8,12 @@
 			<div class="row">
 				<h3 class='col-xs-12'>{{$tag->readableName()}}</h3>
 				<div class="col-xs-12">
-					Created by 
-					{!! link_to_action('UserController@show', $tag->user['username'], [$tag->user]) !!} 
+					Created 
+					@if ($tag->user)
+						by {!! link_to_action('UserController@show', $tag->user['username'], [$tag->user]) !!} 
+					@else
+						anonmyously
+					@endif
 					on {{date('F jS, Y', strtotime($tag->created_at))}}
 				</div>
 				<div class="col-xs-12">&nbsp;</div>

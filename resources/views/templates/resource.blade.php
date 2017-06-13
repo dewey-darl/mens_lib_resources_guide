@@ -17,8 +17,12 @@
 		@if(Auth::user() && Auth::user()->isAdmin())
 			<hr/>
 			<div class="col-xs-12">
-				Created by 
-				{!! link_to_action('UserController@show', $resource->user->username, [$resource->user]) !!} 
+				Created 
+				@if ($resource->user)
+					by {!! link_to_action('UserController@show', $resource->user->username, [$resource->user]) !!} 
+				@else
+					anonymously
+				@endif
 				on {{date('F jS, Y', strtotime($resource->created_at))}}
 			</div>
 			<div class="col-xs-12">

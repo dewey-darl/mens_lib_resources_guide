@@ -48,12 +48,11 @@ Route::group(['middleware' => ['web', 'admin_or_self_auth_group']], function(){
 });
 
 
-Route::group(['middleware' => ['auth']], function(){
-	Route::get('resources/create', 'ResourceController@create');
-	Route::post('resources', 'ResourceController@store');
 
-	Route::post('tag', 'TagController@store');
-});
+Route::get('resources/create', 'ResourceController@create');
+Route::post('resources', 'ResourceController@store');
+Route::post('tag', 'TagController@store');
+
 
 Route::get('resources', 'ResourceController@index');
 //Route::get('resources/{resource}', 'ResourceController@show')->where('resource', '[0-9]+');;

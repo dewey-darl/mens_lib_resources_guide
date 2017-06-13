@@ -17,7 +17,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        $resources = Resource::published()->latest()->get();
+        $resources = Resource::published()->orderBy('name', 'asc')->get();
         return view('resources.index', [
                                             'resources' => $resources, 
                                             'selected_tags' => collect([])
@@ -51,16 +51,22 @@ class ResourceController extends Controller
             'tags.*' => 'exists:tags,id'
         ]);
         //Create the resource
-        $resource = Auth::user()->resources()->create([
+        $newResourceData = [
             'name' => $request->name,
             'url' => $request->url,
             'description' => $request->description,
-            'is_published' => Auth::user()->isAdmin()
-        ]);
+            'is_published' => Auth::user() && Auth::user()->isAdmin()
+        ];
+        if (Auth::user()){
+            $resource = Auth::user()->resources()->create($newResourceData);
+        }
+        else{
+            $resource = Resource::create($newResourceData);
+        }
         //Add the tags for this resource to the pivot table
         $resource->tags()->attach($request->tags);
         $responseText = 'Resource created';
-        $responseText .= Auth::user()->isAdmin() ? ' and published!' : ' and awaiting review.';
+        $responseText .= Auth::user() && Auth::user()->isAdmin() ? ' and published!' : ' and awaiting review.';
         //Take them back to the resource form so they can add more resources
         return redirect('/resources/create')->with('success', $responseText);
     }
@@ -162,7 +168,7 @@ class ResourceController extends Controller
                         ->join('resources', 'resource_tag.resource_id', '=', 'resources.id')
                         ->where('is_published', true)
                         ->groupBy('resources.id')
-                        ->inRandomOrder()
+                        ->orderBy('resources.name', 'asc')
                         ->get();
         $resourceIds = array_column($resourcesInfo->all(), 'id');
         $resources = Resource::find($resourceIds);
@@ -198,7 +204,7 @@ class ResourceController extends Controller
                         ->where('is_published', true)
                         ->groupBy('resources.id')
                         ->havingRaw("count >= $count")
-                        ->inRandomOrder()
+                        ->orderBy('resources.name', 'asc')
                         ->get();
         $resourceIds = array_column($resourcesInfo->all(), 'id');
         $resources = Resource::find($resourceIds);
@@ -225,11 +231,12 @@ class ResourceController extends Controller
                         OR LOWER(description) LIKE '%{$term}%'
                         OR LOWER(url) LIKE '%{$term}%'
                     ")
+                    ->orderBy('resources.name', 'asc')
                     ->get()
             );
         }
         $resourceIds = array_column($collection->all(), 'id');
-        $resources = Resource::find($resourceIds);
+        $resources = Resource::find($resourceIds)->orderBy('name', 'asc');
         return view('resources.index', ['resources' => $resources]);
     }
 
