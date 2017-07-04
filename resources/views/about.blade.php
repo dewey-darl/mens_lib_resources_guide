@@ -5,7 +5,7 @@
 
 <div class="col-xs-12 col-md-10 col-md-offset-1">
 	<h1>Welcome to the Men's Lib resources guide!</h1>
-	Here you'll find a collectiong of resources geared towards men in a variety of situatoins and with a variate of backgrounds.
+	Here you'll find a collectiong of resources geared towards men in a variety of situations and with a variety of backgrounds.
 	<br/><br/>
 	{!! link_to_action('ResourceController@create', 'Click here') !!} to add resources to the database.
 	<h3>Searching for Resources</h3>
