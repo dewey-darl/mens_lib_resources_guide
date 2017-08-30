@@ -47,7 +47,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Men's Lib Resources Guide
+                    MensLib Resources Guide
                 </a>
             </div>
 
@@ -126,7 +126,7 @@
         </div>
     </div>
     <footer class="footer">
-        Men's Lib Resources Guide&nbsp;&nbsp;|
+        MensLib Resources for Men Guide&nbsp;&nbsp;|
         &nbsp;&nbsp;<a href="https://reddit.com/r/menslib" target="_blank">Subreddit</a>&nbsp;&nbsp;|
         &nbsp;&nbsp;<a href="https://www.reddit.com/message/compose/?to=dewey_darl" target="_blank">Contact Creator</a>
     </footer>
