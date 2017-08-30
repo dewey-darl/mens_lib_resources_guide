@@ -14,7 +14,7 @@
 	You'll see a search box appear, along with a group of tags beneath it. Click tags to add or remove them from the search box.
 	</p>
 	<p>
-	Bellow the group of tags, you'll see two buttons. One says "Get Resources With Any of These Tags". The other says 
+	Below the group of tags, you'll see two buttons. One says "Get Resources With Any of These Tags". The other says
 	"Get Resources With All of These Tags". Clicking the first one will show you resources that match any one of the tags in the search bar. Clicking the second will show you resources that have all of the tags in the search bar.
 	</p>
 	<p>
