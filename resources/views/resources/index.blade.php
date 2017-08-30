@@ -14,7 +14,7 @@
 <div class="row">
 	<div class="col-xs-12 col-md-10 col-md-offset-1">
 		<h1>Welcome to the Men's Lib resources guide!</h1>
-		Here you'll find a collectiong of resources geared towards men in a variety of situatoins and with a variate of backgrounds.
+		Here you'll find a collection of resources geared towards men in a variety of situations and with a variety of backgrounds.
 		<br/><br/>
 		<a href="/resources/about">Click here</a> to find out how the search form works.
 		<br/><br/>
